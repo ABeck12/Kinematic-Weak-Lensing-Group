@@ -47,6 +47,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 import time
+from tqdm import tqdm
 
 
 def TimeFunction(func):
@@ -91,16 +92,44 @@ def CreateFolder(service, name, parentID=None):
     folder_id = file.get('id')
     return folder_id
 
+def ResumeableFileUpload(service, folderpath, filename, parentID):
+    try:
+        file_metadata = {"name": filename, "parents": [parentID],}
+        media = MediaFileUpload(f'{folderpath}/{filename}',
+                            chunksize=1024 * 1024,
+                            mimetype='text/plain',
+                            resumable=True)
+        request = service.files().create(body=file_metadata, media_body=media)
+        response = None
+
+        print(f'Uploading {folderpath}/{filename}')
+        with tqdm(total=100) as pbar:
+            while response is None:
+                status, response = request.next_chunk()
+                if status:
+                    currentPercentage = int(status.progress() * 100)
+                    pbar.n = currentPercentage
+                    pbar.refresh()
+            pbar.n = 100
+            pbar.refresh
+    except:
+        print(f'Could not back up {folderpath}/{filename}')
+
 def RecursiveBackupFolder(service, folder_id, folderpath: str):
     for path in os.listdir(folderpath):
         if os.path.isdir(f'{folderpath}/{path}'):
             subfolderID = CreateFolder(service, path, folder_id)
             RecursiveBackupFolder(service, subfolderID, f'{folderpath}/{path}')
         if os.path.isfile(f'{folderpath}/{path}'):
-            file_metadata = {"name": path, "parents": [folder_id],}
-            media = MediaFileUpload(f'{folderpath}/{path}')
-            upload_file = service.files().create(body=file_metadata, media_body=media, fields = "id").execute()
-            print(f'Backed up file: {folderpath}/{path}')
+            ResumeableFileUpload(service, folderpath, path, folder_id)
+            # try:
+            #     print(f'Starting backup of file: {folderpath}/{path}')
+            #     file_metadata = {"name": path, "parents": [folder_id],}
+            #     media = MediaFileUpload(f'{folderpath}/{path}')
+            #     upload_file = service.files().create(body=file_metadata, media_body=media, fields = "id").execute()
+            #     print(f'Backed up file: {folderpath}/{path}')
+            # except:
+            #     print(f'Could not backup file: {folderpath}/{path}')
     return
 
 @TimeFunction
@@ -182,7 +211,8 @@ def MultiFolderBackupFromTxt(txtFilename, gDriveFolderName):
     MultiFolderBackup(dirlist, gDriveFolderName)
 
 def main():
-    # MultiFolderBackupFromTxt('BackupFolders.txt', 'Test')
+    # SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\BackupTesting\largeFiles', 'LargeFilesTest')
+    SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\Specpro', 'Astro Backup')
     return
 
 if __name__ == "__main__":
