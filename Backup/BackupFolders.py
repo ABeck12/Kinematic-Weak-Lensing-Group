@@ -218,7 +218,7 @@ def MultiFolderBackupFromTxt(txtFilename, gDriveFolderName):
 
 def main():
     inputlist = sys.argv
-    SingleFolderBackup(inputlist[0], inputlist[1])
+    SingleFolderBackup(inputlist[1], inputlist[2])
     # SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\Specpro', 'test')
     return
 
