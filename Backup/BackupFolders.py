@@ -38,7 +38,8 @@ MultiFolderBackupFromTxt(txtFileName, gDriveFolderName)
     txtFileName - Filepath to a file with a list of directories that you want to use.
     gDriveFolderName - This is the name of the root folder that it will save things to. All subfolders names will be copied over to the google drive subfolders
 
-To run from command line run pyhton Backup    
+To run from command line run 
+pyhton BackupFolders.py [filepath] [googledrive folder]    
     
 '''
 
