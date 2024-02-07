@@ -2,6 +2,8 @@
 Setup:
 Download the google python packages with
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+as well as 
+pip install tqdm
 
 Go to https://console.cloud.google.com/welcome/new and create a new project
 On the left under the navigation menu go to APIs and Services -> OAuth Consent Screen
@@ -35,10 +37,14 @@ MultiFolderBackup(rootFilepathsList, gDriveFolderName)
 MultiFolderBackupFromTxt(txtFileName, gDriveFolderName)
     txtFileName - Filepath to a file with a list of directories that you want to use.
     gDriveFolderName - This is the name of the root folder that it will save things to. All subfolders names will be copied over to the google drive subfolders
+
+To run from command line run pyhton Backup    
+    
 '''
 
 
 import os
+import sys
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -211,8 +217,9 @@ def MultiFolderBackupFromTxt(txtFilename, gDriveFolderName):
     MultiFolderBackup(dirlist, gDriveFolderName)
 
 def main():
-    # SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\BackupTesting\largeFiles', 'LargeFilesTest')
-    SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\Specpro', 'Astro Backup')
+    inputlist = sys.argv
+    SingleFolderBackup(inputlist[0], inputlist[1])
+    # SingleFolderBackup(r'C:\Users\Alden\OneDrive\Documents\StonyBrook\Spectroscopy\Specpro', 'test')
     return
 
 if __name__ == "__main__":
