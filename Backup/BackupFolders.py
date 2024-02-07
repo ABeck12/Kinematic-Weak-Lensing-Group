@@ -123,10 +123,10 @@ def ResumeableFileUpload(service, folderpath, filename, parentID):
 
 def RecursiveBackupFolder(service, folder_id, folderpath: str):
     for path in os.listdir(folderpath):
-        if os.path.isdir(f'{folderpath}/{path}'):
+        if os.path.isdir(os.path.join(folderpath,path)):
             subfolderID = CreateFolder(service, path, folder_id)
             RecursiveBackupFolder(service, subfolderID, f'{folderpath}/{path}')
-        if os.path.isfile(f'{folderpath}/{path}'):
+        if os.path.isfile(os.path.join(folderpath,path)):
             ResumeableFileUpload(service, folderpath, path, folder_id)
             # try:
             #     print(f'Starting backup of file: {folderpath}/{path}')
