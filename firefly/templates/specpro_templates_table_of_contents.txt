@@ -1,0 +1,68 @@
+1: VVDS LBG
+'/template5_olf.fits'
+
+2: VVDS elliptical
+'/template0_olf.fits'
+
+3: VVDS S0
+'/template1_olf.fits'
+
+4: VVDS Early Spiral
+'/template2_olf.fits'
+
+5: VVDS Spiral
+'/template3_olf.fits'
+    
+6: VVDS Starburst
+'/template4_olf.fits'
+ 
+7: SSDS QSO
+'/sdss_qso.fits'
+ 
+8: Red galaxy
+'/gal001vel0.fits'
+ 
+9: Green galaxy
+'/gal015vel0.fits'
+ 
+10: Blue galaxy
+'/gal025vel0.fits'
+  
+11: LBG shapley
+'/lbg.fits'
+  
+12: LoBAL
+'/first_lobals.fits'
+  
+13: HiBAL
+'/first_hibals.fits'
+
+14: A0 star
+'/uka0v.dat'
+
+15: F0 star
+'/ukf0v.dat'
+
+16: G0 star
+'/ukg0v.dat'
+
+17: K0 star
+'/ukk0v.dat'
+
+18: M0 star
+'/ukm0v.dat'
+
+19: M6 star
+'/ukm6v.dat'
+
+
+--- LINES ---
+
+'Emission':         'emlines.dat'
+'High-z':           'highzlines.dat'
+'Seyfert emission': 'seyfertemissionlines.dat'
+'QSO absorption':   'qsoabsorptionlines.dat'
+'QSO emission':     'qsoemissionlines.dat'        
+'Elliptical':       'ellipticalabsorptionlines.dat'
+'QSO emission (subset)':  'prominentqsoemlines.dat'        
+'Elliptical (subset)':    'prominentellipticalabsorptionlines.dat' 
