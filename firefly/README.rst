@@ -1,5 +1,5 @@
 **Fast Initial REdshift Fitting of cLuster galaxY (FIREFLY)**
-
+###########
 
 To run, use your bash terminal and type:
 
